@@ -99,7 +99,7 @@ class SingleUnixServer(UnixStreamServer):
 
     def __init__(self, file: str, handler: type[StreamRequestHandler]) -> None:
 
-        path = f"/tmp/skill-server-{file}.sock"
+        path = getenv("SKILLBRIDGE_SOCK_FILE") or f"/tmp/skill-server-{file}.sock"
         Path(path).unlink(missing_ok=True)
 
         super().__init__(path, handler)
