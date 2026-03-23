@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
     <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Examples" href="../examples/index.html" />
@@ -43,7 +43,7 @@ into your terminal to get the correct paths).</p>
 <p>After that, these management commands are available in the Skill console.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyStartServer">
-<span class="sig-name descname"><span class="pre">pyStartServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id=&quot;default&quot;</span> <span class="pre">logLevel=&quot;INFO&quot;</span> <span class="pre">singleMode=nil</span> <span class="pre">timeout=nil</span> <span class="pre">python=&quot;python&quot;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyStartServer" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">pyStartServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&quot;default&quot;</span> <span class="pre">logLevel=&quot;INFO&quot;</span> <span class="pre">singleMode=nil</span> <span class="pre">timeout=nil</span> <span class="pre">python=&quot;python&quot;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forceTcp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nil</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyStartServer" title="Link to this definition">¶</a></dt>
 <dd><p>This starts the python server. If you are only running a single instance of
 Virtuoso you can use the default id. For more instances, each server needs its own
 id.</p>
@@ -80,6 +80,11 @@ You must restart the Skill server before you can continue.</p>
 interpreter is called differently (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;python3.6&quot;</span></code>) you can pass its name with the
 <code class="docutils literal notranslate"><span class="pre">python</span></code> parameter. Your specified interpreter does not need the <code class="docutils literal notranslate"><span class="pre">skillbridge</span></code> package.
 The only requirement is <code class="docutils literal notranslate"><span class="pre">python&gt;=3.6</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">forceTcp</span></code> keyword-argument controls the use of tcp sockets. Using <code class="docutils literal notranslate"><span class="pre">?forceTcp</span> <span class="pre">t</span></code> will enable the server-side use of TCP sockets in UNIX systems.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure to use a numeric id, i.e. <code class="docutils literal notranslate"><span class="pre">?id</span> <span class="pre">&quot;56789&quot;</span></code>, that is within the TCP port range (0-65535)</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The parameters are marked with <code class="docutils literal notranslate"><span class="pre">&#64;key</span></code> which means that it is only possible
@@ -210,7 +215,7 @@ how many lines will be printed. It always refers to the <strong>last</strong>
       &#169;2019, Niels Buwen.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.1</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.0.4</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |

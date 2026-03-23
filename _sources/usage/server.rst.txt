@@ -13,7 +13,7 @@ into your terminal to get the correct paths).
 
 After that, these management commands are available in the Skill console.
 
-.. function:: pyStartServer(id="default" logLevel="INFO" singleMode=nil timeout=nil python="python")
+.. function:: pyStartServer(id="default" logLevel="INFO" singleMode=nil timeout=nil python="python", forceTcp=nil)
 
     This starts the python server. If you are only running a single instance of
     Virtuoso you can use the default id. For more instances, each server needs its own
@@ -57,6 +57,11 @@ After that, these management commands are available in the Skill console.
     ``python`` parameter. Your specified interpreter does not need the ``skillbridge`` package.
     The only requirement is ``python>=3.6``.
 
+    The ``forceTcp`` keyword-argument controls the use of tcp sockets. Using ``?forceTcp t`` will enable the server-side use of TCP sockets in UNIX systems.
+
+    .. warning::
+        Make sure to use a numeric id, i.e. ``?id "56789"``, that is within the TCP port range (0-65535)
+
     .. note::
 
         The parameters are marked with ``@key`` which means that it is only possible
@@ -85,6 +90,7 @@ After that, these management commands are available in the Skill console.
 
             ; use a custom interpreter path
             pyStartServer ?python "python3.6"
+
 
 .. function:: pyKillServer()
 
