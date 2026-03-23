@@ -6,6 +6,9 @@ from socket import AF_INET, SOCK_STREAM, socket
 from sys import platform
 from typing import Any, Iterable, TextIO
 
+PORT_RANGE_MIN = 0
+PORT_RANGE_MAX = 0xFFFF
+
 
 class Channel:
     def __init__(self, max_transmission_length: int) -> None:
@@ -91,8 +94,8 @@ class TcpChannel(Channel):
     def create_socket(self) -> socket:
         return socket(self.address_family, self.socket_kind)
 
-    def configure(self, _: socket) -> None:
-        pass
+    def configure(self, sock: socket) -> None:
+        _ = sock
 
     def connect(self, sock: socket) -> socket:
         sock.settimeout(1)
@@ -181,10 +184,10 @@ class TcpChannel(Channel):
                 break
 
 
-if platform == 'win32':
+def create_channel_class(force_tcp: bool = False) -> type[TcpChannel]:
+    if platform == 'win32' or force_tcp:
 
-    def create_channel_class() -> type[TcpChannel]:
-        class WindowsChannel(TcpChannel):
+        class CustomTcpChannel(TcpChannel):
             def configure(self, sock: socket) -> None:
                 try:
                     from socket import (  # type: ignore[attr-defined]  # noqa: PLC0415
@@ -199,23 +202,27 @@ if platform == 'win32':
                     pass
 
             @staticmethod
-            def create_address(id_: Any) -> Any:
-                port = 7777 if id_ is None else id_
-                return 'localhost', port
+            def create_address(id_: str | None) -> tuple[str, int]:
+                if id_ is None:
+                    return 'localhost', 7777
 
-        return WindowsChannel
+                if not (id_.isnumeric() and PORT_RANGE_MIN <= int(id_) <= PORT_RANGE_MAX):
+                    raise ValueError(
+                        f"TCP server requires a numeric id in range 0-65535 (given=`{id_}`)"
+                    )
 
-else:
+                return 'localhost', int(id_)
 
-    def create_channel_class() -> type[TcpChannel]:
-        from socket import AF_UNIX  # noqa: PLC0415
+        return CustomTcpChannel
 
-        class UnixChannel(TcpChannel):
-            address_family = AF_UNIX
+    from socket import AF_UNIX  # noqa: PLC0415
 
-            @staticmethod
-            def create_address(id_: Any) -> Any:
-                id_ = 'default' if id_ is None else id_
-                return f'/tmp/skill-server-{id_}.sock'
+    class CustomUnixChannel(TcpChannel):
+        address_family = AF_UNIX
 
-        return UnixChannel
+        @staticmethod
+        def create_address(id_: Any) -> Any:
+            id_ = 'default' if id_ is None else id_
+            return f'/tmp/skill-server-{id_}.sock'
+
+    return CustomUnixChannel

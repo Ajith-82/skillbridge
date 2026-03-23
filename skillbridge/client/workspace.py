@@ -244,7 +244,32 @@ class Workspace:
             ip.Completer.greedy = True
 
     @classmethod
-    def open(cls, workspace_id: WorkspaceId = None, direct: bool = False) -> Workspace:
+    def open(
+        cls,
+        workspace_id: WorkspaceId = None,
+        direct: bool = False,
+        *,
+        force_tcp: bool = False,
+    ) -> Workspace:
+        """
+        Establish a Workspace connection
+
+        Args:
+            workspace_id: id/port to use for communication between server and client.
+                (needs to be numeric and between 0 and 65535, when using TCP sockets)
+            direct: use direct communication mode
+            force_tcp: use TCP sockets on UNIX Systems (incompatible with ``direct``)
+
+        Returns:
+            opened workspace
+
+        Raises:
+            RuntimeError: no server was found
+            ValueError: options were in conflict
+        """
+        if force_tcp and direct:
+            raise ValueError("tcp flag in conflict with direct mode")
+
         if direct and not sys.stdin.isatty():
             stdout = sys.stdout
             sys.stdout = sys.stderr
@@ -253,7 +278,7 @@ class Workspace:
 
         if workspace_id not in _open_workspaces:
             try:
-                channel_class = create_channel_class()
+                channel_class = create_channel_class(force_tcp)
                 channel = channel_class(workspace_id)
             except FileNotFoundError:
                 raise RuntimeError("No server found. Is it running?") from None

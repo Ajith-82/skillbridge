@@ -10,17 +10,18 @@ from skillbridge.server import python_server
 
 
 class Virtuoso(Thread):
-    def __init__(self, socket) -> None:
+    def __init__(self, workspace_id: str, force_tcp: bool = False) -> None:
         super().__init__(daemon=True)
         self.daemon = True
 
+        self.force_tcp = force_tcp
         self.queue = Queue()
         self.questions = []
         self.should_run = True
         self.server = None
         self.running = False
         self.pin = None
-        self.socket = socket
+        self.workspace_id = workspace_id
 
     def wait_until_ready(self):
         while not self.running:
@@ -30,8 +31,9 @@ class Virtuoso(Thread):
     def _create_subprocess(self):
         script = python_server.__file__
         master, slave = openpty()
+        force_args = ["--force-tcp"] if self.force_tcp else []
         self.server = Popen(
-            [executable, script, self.socket, "DEBUG", '--notify'],
+            [executable, script, self.workspace_id, "DEBUG", '--notify', *force_args],
             stdin=slave,
             stdout=PIPE,
             stderr=STDOUT,
@@ -82,7 +84,7 @@ class Virtuoso(Thread):
                 return self.server.stdout.readline().strip()
         return None
 
-    def write(self, message):
+    def write(self, message: str):
         self.pin.write(message + '\n')
 
     def stop(self):
@@ -91,18 +93,18 @@ class Virtuoso(Thread):
         self.server.kill()
         self.server.wait()
 
-    def answer_with(self, status, message):
+    def answer_with(self, status: str, message: str):
         self.queue.put(status + ' ' + message)
 
-    def answer_success(self, message):
+    def answer_success(self, message: str):
         self.answer_with('success', message)
 
-    def answer_object(self, type_, address, object_type=()):
+    def answer_object(self, type_: type, address: str, object_type: str = ()):
         self.answer_success(f'Remote("__py_{type_}_{address}")')
         if object_type != ():
             self.answer_success(repr(object_type))
 
-    def answer_failure(self, message):
+    def answer_failure(self, message: str):
         self.answer_with('failure', message)
 
     @property

@@ -14,7 +14,7 @@ def ws() -> Workspace:
     try:
         workspace = Workspace.open()
         assert workspace['plus'](1, 2) == 3
-    except (Exception, ValueError, AssertionError):
+    except (Exception, ValueError, AssertionError):  # noqa: BLE001
         warn("Skipping integration tests, because Workspace could not connect", UserWarning)
         skip()
 
