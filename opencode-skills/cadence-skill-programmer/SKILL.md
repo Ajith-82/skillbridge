@@ -82,6 +82,7 @@ Verification pattern:
 - Choose APIs that match the editor/domain: `ge*` for graphics/editor actions, `db*` for database objects, `de*` for design editor behavior, `hi*` for forms/UI, layout-specific functions from `sklayoutref` when the task is layout-only, and core language functions from `sklangref` for general SKILL structure.
 - For bindkeys and UI customization, expect useful functions in `skuiref`, `skdfref`, and `sklayoutref`.
 - For database mutations, verify on a minimal object or current edit cellview before producing a final answer.
+- For window-opening helpers, avoid creating duplicate windows during verification. Prefer checking whether the target cellview is already open with documented APIs such as `dbFindOpenCellViewByName` and `geGetCellViewWindow`, and when verifying an open helper, inspect the returned window or its cellview instead of calling the open helper a second time.
 - When several functions are plausible, tell the user which one you chose and why.
 
 ## Output expectations
