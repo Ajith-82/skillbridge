@@ -1,0 +1,23 @@
+{
+  "skill_name": "cadence-skill-programmer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write a Virtuoso SKILL bindkey that zooms to the selected object in the current layout window, refreshes the window, and explain which documented APIs you used. Verify it through the existing skillbridge session.",
+      "expected_output": "Documented candidate APIs should be located from the local Cadence docs, then the SKILL code should be tested through skillbridge and revised if needed.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I need SKILL code to create a rectangle on a given LPP in the current edit cellview, save the cellview, and explain which database and editor functions are the public documented ones for this workflow. Verify the code in the running Virtuoso session.",
+      "expected_output": "The answer should identify the relevant db/ge categories, produce working SKILL, and verify the code or clearly report why verification could not be completed.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Find the documented SKILL APIs for creating or configuring a simple UI form in Virtuoso, then implement a small example form with one string field and one button. Use the prebuilt doc index first, fall back to deeper doc lookup if necessary, and verify the code through skillbridge.",
+      "expected_output": "The skill should use the prebuilt category/function index to narrow the search, cite the chosen UI APIs, produce a form example, and run a verification loop through skillbridge.",
+      "files": []
+    }
+  ]
+}
