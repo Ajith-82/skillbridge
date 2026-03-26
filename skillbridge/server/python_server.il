@@ -195,7 +195,7 @@ let((_filename _baseName _moduleFolder _logDirectory _executable _unbound)
     )
 
     putd('pyStartServer nil)
-    defun(pyStartServer (@key (id "default") (logLevel "INFO") (singleMode nil) (timeout nil) (python "python") (forceTcp nil) "ttggtg")
+    defun(pyStartServer (@key (id "default") (logLevel "INFO") (singleMode nil) (timeout nil) (python "python") (forceTcp nil) (allowGid nil) (allowExtraUser nil) "ttggtggg")
         if(pyStartServer.ipc then
             fprintf(stderr, "server is already running\n")
             nil
@@ -209,6 +209,12 @@ let((_filename _baseName _moduleFolder _logDirectory _executable _unbound)
                 )
                 if(timeout then
                     executableWithArgs = lsprintf("%s --timeout %L" executableWithArgs timeout)
+                )
+                if(allowGid then
+                    executableWithArgs = lsprintf("%s --allow-gid %L" executableWithArgs allowGid)
+                )
+                if(allowExtraUser then
+                    executableWithArgs = lsprintf("%s --allow-extra-user %L" executableWithArgs allowExtraUser)
                 )
                 executableWithArgs = lsprintf("\"%s\" %s" python executableWithArgs)
 
@@ -236,7 +242,7 @@ let((_filename _baseName _moduleFolder _logDirectory _executable _unbound)
     pyStartServer.exe = _executable
 
     printf("Available commands:\n")
-    printf("\tpyStartServer ?id \"default\" ?logLevel \"WARNING\" ?singleMode nil ?timeout nil ?python \"python\"\n")
+    printf("\tpyStartServer ?id \"default\" ?logLevel \"WARNING\" ?singleMode nil ?timeout nil ?python \"python\" ?forceTcp nil ?allowGid nil ?allowExtraUser nil\n")
     printf("\tpyKillServer\n")
     printf("\tpyReloadScript\n")
     printf("\tpyShowLog [numberOfLines]\n")
