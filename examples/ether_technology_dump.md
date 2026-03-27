@@ -1,14 +1,209 @@
 # ether Technology File Dump
 
 - Library: `ether`
-- Generated: `2026-03-26 16:22:04Z`
+- Generated: `2026-03-27 00:58:39Z`
 - Source dump: `/tmp/ether_techfile_ascii.tf`
+- Section count: `10`
 
-This markdown file contains the raw ASCII technology file dump generated through `techGetTechFile` and `tcDumpTechFile` via skillbridge.
+This markdown file contains a section summary followed by the raw ASCII technology file dump generated through `techGetTechFile` and `tcDumpTechFile` via skillbridge.
+
+## Section Summary
+
+### CONTROLS
+
+- Non-empty lines: `150`
+- Top-level form count: `124`
+- Top-level forms: `NWW1, NIMPE2, PIMPE2, CONTW1, CONTSP1, CONTE1, METAL1E2, ndiff_layer, pdiff_layer, nstrap_layer, pstrap_layer, active_layer`
+
+Preview:
+
+```text
+;********************************
+; CONTROLS
+;********************************
+controls(
+ techVersion("1.0")
+ techParams(
+ ;( parameter           value             )
+ ;( ----------          -----             )
+```
+
+### LAYER DEFINITION
+
+- Non-empty lines: `1125`
+- Top-level form count: `1091`
+- Top-level forms: `port1, region, ppath, ppath1, macro, nwell, dnwell, ipwell, GeoShare, port, OVERLAP, Oxide`
+
+Preview:
+
+```text
+;********************************
+; LAYER DEFINITION
+;********************************
+layerDefinitions(
+ techPurposes(
+ ;( PurposeName               Purpose#   Abbreviation )
+ ;( -----------               --------   ------------ )
+ ;User-Defined Purposes:
+```
+
+### LAYER RULES
+
+- Non-empty lines: `188`
+- Top-level form count: `61`
+- Top-level forms: `PWdummy, Psub, Nburied, Nwell, Oxide, Oxide_thk, Poly, Nhvt, Nimp, Phvt, Pimp, Nzvt`
+
+Preview:
+
+```text
+;********************************
+; LAYER RULES
+;********************************
+layerRules(
+ equivalentLayers(
+ ;( list of layers )
+ ;( -------------- )
+ ) ;equivalentLayers
+```
+
+### VIADEFS
+
+- Non-empty lines: `218`
+- Top-level form count: `99`
+- Top-level forms: `M9_M8v, 1, 0, M8_M7v, M7_M6v, M6_M5v, M5_M4v, M4_M3v, M3_M2v, M2_M1v, M1_POv, M1_DIFF`
+
+Preview:
+
+```text
+;********************************
+; VIADEFS
+;********************************
+viaDefs(
+ standardViaDefs(
+ ;( viaDefName	layer1	layer2	(cutLayer cutWidth cutHeight [resistancePerCut]) 
+ ;   (cutRows	cutCol	(cutSpace)	[(l_cutPattern)]) 
+ ;   (layer1Enc) (layer2Enc)	(layer1Offset)	(layer2Offset)	(origOffset) 
+```
+
+### PACKAGING
+
+- Non-empty lines: `40`
+- Top-level form count: `0`
+- Top-level forms: `none detected`
+
+Preview:
+
+```text
+;********************************
+; PACKAGING
+;********************************
+packaging(
+wireProfiles(
+; (t_name
+;   'direction         t_direction
+;   ['diameter         f_diameter]
+```
+
+### CONSTRAINT GROUPS
+
+- Non-empty lines: `1101`
+- Top-level form count: `700`
+- Top-level forms: `validLayers, validVias, errorLayer, taperHalo, minSpacingOver, minOverlapDistance, minWidth, horizontalPitch, verticalPitch, horizontalOffset, verticalOffset, minSpacing`
+
+Preview:
+
+```text
+;********************************
+; CONSTRAINT GROUPS
+;********************************
+constraintGroups(
+ ;( group	[override]	[definition]	[operator] )
+ ;( -----	----------	------------	---------- )
+  ( "default"	nil
+  ) ;default
+```
+
+### DEVICES
+
+- Non-empty lines: `104`
+- Top-level form count: `2`
+- Top-level forms: `minus`
+
+Preview:
+
+```text
+;********************************
+; DEVICES
+;********************************
+devices(
+tcCreateCDSDeviceClass()
+;
+; no cdsVia devices
+;
+```
+
+### LE RULES
+
+- Non-empty lines: `9`
+- Top-level form count: `0`
+- Top-level forms: `none detected`
+
+Preview:
+
+```text
+;********************************
+; LE RULES
+;********************************
+leRules(
+ leLswLayers(
+ ;( layer               purpose         )
+ ;( -----               -------         )
+ ) ;leLswLayers
+```
+
+### SITEDEFS
+
+- Non-empty lines: `16`
+- Top-level form count: `2`
+- Top-level forms: `io_pad, gpdk090Site`
+
+Preview:
+
+```text
+;********************************
+; SITEDEFS
+;********************************
+siteDefs(
+ scalarSiteDefs(
+ ;( siteDefName          type width  height  symInX symInY symInR90)
+ ;( -----------          ---- -----  ------  ------ ------ -------)
+  ( io_pad               pad  6.0  20.0  t nil nil)
+```
+
+### VIASPECS
+
+- Non-empty lines: `30`
+- Top-level form count: `9`
+- Top-level forms: `Metal8, Metal7, Metal6, Metal5, Metal4, Metal3, Metal2, Metal1, Poly`
+
+Preview:
+
+```text
+;********************************
+; VIASPECS
+;********************************
+viaSpecs(
+ ;(layer1  layer2  (viaDefName ...) 
+ ;   [(        
+ ;	(layer1MinWidth layer1MaxWidth layer2MinWidth layer2MaxWidth 
+ ;            (viaDefName ...)) 
+```
+
+## Raw ASCII Dump
 
 ````skill
 ; Technology File gpdk090
-; Generated on Mar 26 16:22:04 2026
+; Generated on Mar 27 00:58:39 2026
 ;     with @(#)$CDS: virtuoso version IC23.1-64b 10/31/2023 23:29 (cpgbld22) $
 
 

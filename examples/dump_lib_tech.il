@@ -15,3 +15,7 @@ procedure(sbDumpLibTechFile(libName dumpFile @optional (sectionList nil) (mode "
 procedure(sbDumpEtherTechFile(dumpFile)
   sbDumpLibTechFile("ether" dumpFile)
 )
+
+procedure(sbDumpTechFileForMarkdown(libName dumpFile)
+  sbDumpLibTechFile(libName dumpFile)
+)
