@@ -1,0 +1,5 @@
+from skillbridge import Workspace
+ws = Workspace.open("default")
+ws._channel.send('load("/home/cloud/projects/skillbridge/examples/highlight_net.il")')
+print(ws._channel.send('SBhilightNets(geGetEditCellView() "bias1")'))
+ws.close()
