@@ -41,6 +41,20 @@ let((added item)
       )
       added
     )
+    (obj~>objType == "term"
+      item = car(obj~>pins)
+      when(and(item item~>fig)
+        when(SBaddObjectToHilightSet(hlSet item~>fig)
+          added = t
+        )
+      )
+      when(obj~>net
+        when(SBaddObjectToHilightSet(hlSet obj~>net)
+          added = t
+        )
+      )
+      added
+    )
     (or(obj~>objType == "inst" obj~>bBox)
       geAddHilightFig(hlSet obj)
       t
@@ -88,17 +102,34 @@ let((instObj found)
 )
 
 
+procedure(SBfindTermByName(cv termName)
+let((termObj found)
+  found = nil
+  foreach(termObj cv~>terminals
+    when(equal(termObj~>name termName)
+      found = termObj
+    )
+  )
+  found
+)
+)
+
+
 procedure(SBfindObjectByName(cv objName)
-let((netObj instObj)
+let((netObj instObj termObj)
   when(and(cv~>objType == "cellView" not(blankstrp(objName)))
+    termObj = SBfindTermByName(cv objName)
     netObj = dbFindNetByName(cv objName)
     instObj = nil
-    unless(netObj
+    unless(or(termObj netObj)
       instObj = SBfindInstByName(cv objName)
     )
-    if(netObj
+    if(termObj
+      termObj
+      if(netObj
       netObj
       instObj
+      )
     )
   )
 )
@@ -114,6 +145,26 @@ let((instObj found)
     )
   )
   reverse(found)
+)
+)
+
+
+procedure(SBpinAndNetObjects(cv pinName)
+let((termObj pinObj objects)
+  objects = nil
+  when(and(cv~>objType == "cellView" not(blankstrp(pinName)))
+    termObj = SBfindTermByName(cv pinName)
+    when(termObj
+      pinObj = car(termObj~>pins)
+      when(pinObj
+        objects = cons(pinObj~>fig objects)
+      )
+      when(termObj~>net
+        objects = cons(termObj~>net objects)
+      )
+    )
+  )
+  reverse(objects)
 )
 )
 
@@ -152,6 +203,13 @@ procedure(SBhilightInstList(cv instNames)
 )
 
 
+procedure(SBhilightPinNet(cv pinName)
+  when(cv~>objType == "cellView"
+    SBhilightObjects(cv SBpinAndNetObjects(cv pinName))
+  )
+)
+
+
 procedure(SBunhilightInsts()
   SBunhilightObjects()
 )
@@ -183,3 +241,4 @@ let((insts instName instObj)
 ;SBhilightObjects(geGetEditCellView() list(dbFindNetByName(geGetEditCellView() "bias1") SBfindInstByName(geGetEditCellView() "NM1")))
 ;SBunhilightObjects()
 ;SBclearStuckInstHalo(geGetEditCellView() list("NM1" "PM1"))
+;SBhilightPinNet(geGetEditCellView() "VDD")
