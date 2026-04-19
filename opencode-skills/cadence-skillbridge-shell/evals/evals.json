@@ -1,0 +1,29 @@
+{
+  "skill_name": "cadence-skillbridge-shell",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to export a Spectre netlist from a schematic by running `si` from the associated Virtuoso session, not from the host shell. Please create any SKILL wrapper needed, use a writable run directory, and verify the generated netlist and log through skillbridge.",
+      "expected_output": "The result should route `si -batch -command nl` through skillbridge, use `system()` or a wrapper around it, and verify both the log and generated netlist artifacts.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Run `/opt/cadence/...` through the live Virtuoso session and show me how you verified the command in CIW/CDS.log. Avoid plain Bash for the Cadence executable itself.",
+      "expected_output": "The result should choose skillbridge-mediated shell execution, print command plus exit code from SKILL, and explain how the CIW/CDS.log trace is verified.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Wrap a compound shell command in SKILL so I can reuse it from Virtuoso, including `cd`, output redirection, and a log tail. Verify the wrapper through skillbridge.",
+      "expected_output": "The result should prefer `system(\"/bin/sh -c ...\")`, include safe quoting or a helper, and verify that the wrapper loads and runs via skillbridge.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Build me a reusable helper that writes `si.env` for a schematic and then runs `si -batch -command nl` through the associated Virtuoso session. Keep the run directory writable from Virtuoso and verify the resulting netlist artifact.",
+      "expected_output": "The result should use dedicated `si` wrapper functions or scripts, generate `si.env`, run the netlister through skillbridge, and verify the produced log and netlist path.",
+      "files": []
+    }
+  ]
+}

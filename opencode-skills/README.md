@@ -11,6 +11,8 @@ This directory stores repo-managed OpenCode skills for local development alongsi
 ## Current skills
 
 - `cadence-skill-programmer` - Cadence Virtuoso SKILL coding skill with a prebuilt local documentation index and skillbridge verification helpers.
+- `cadence-skillbridge-shell` - Run Cadence CLI tools such as `si` through the associated Virtuoso session via skillbridge, with SKILL shell wrappers and CIW/CDS.log-oriented verification.
+- `cadence-spectre-netlist-export` - Export Spectre netlists from Virtuoso schematics or configs by preparing `si.env` and `cds.lib`, then running `si -batch -command nl` through the associated Virtuoso session.
 
 ## Maintenance
 
