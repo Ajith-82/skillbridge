@@ -140,7 +140,7 @@ procedure(SBfindInstsByName(cv instNames)
 let((instObj found)
   found = nil
   foreach(instObj cv~>instances
-    when(member(instObj~>name instNames 'equal)
+    when(exists(name instNames equal(instObj~>name name))
       found = cons(instObj found)
     )
   )
