@@ -1,0 +1,23 @@
+{
+  "skill_name": "cadence-spectre-netlist-export",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Export a Spectre netlist from a Virtuoso schematic using `si.env` and `cds.lib`, but make sure `si` itself runs through the associated Virtuoso session via skillbridge and not as a plain shell command.",
+      "expected_output": "The result should set up the run directory, prepare or validate `si.env` and `cds.lib`, invoke `si -batch -command nl` through Virtuoso, and verify the resulting netlist files.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I have a target schematic and want the final answer to tell me exactly where the generated Spectre netlist, `si.env`, and log files landed. Use the existing Virtuoso session and confirm the output paths.",
+      "expected_output": "The result should focus on the schematic-to-Spectre export flow and report concrete artifact paths plus verification evidence.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Please automate a reusable schematic-to-Spectre export flow for Virtuoso, including writable temp directory handling, `si.env` generation, and a check that the netlist really corresponds to the requested design.",
+      "expected_output": "The result should use or build a reusable helper for the export flow and verify both logging and netlist content.",
+      "files": []
+    }
+  ]
+}

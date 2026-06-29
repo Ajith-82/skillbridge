@@ -287,6 +287,18 @@ class Workspace:
         return _open_workspaces[workspace_id]
 
     def close(self, log_exception: bool = True) -> None:
+        # Best-effort cleanup of leftover __py.* variables in the Cadence
+        # environment before closing the channel. Large simulation data left
+        # bound to these variables otherwise leaks memory server-side. Fully
+        # guarded so it can never prevent the channel from closing and is a
+        # harmless no-op when no live server is reachable.
+        try:
+            for var in self['listVariables']('__py.*'):
+                self._channel.send(f"{getattr(var, 'name', var)} = 'unbound")
+            self['gc']()
+        except Exception:  # noqa: BLE001
+            pass
+
         try:
             self._channel.close()
         except:  # noqa: E722

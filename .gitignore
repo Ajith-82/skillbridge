@@ -26,3 +26,6 @@ test.ipynb
 
 *.so
 python_server.log
+
+# Generated SKILL-docs index (regenerate with opencode-skills/cadence-skill-programmer/scripts/build_index.py)
+opencode-skills/cadence-skill-programmer/references/index/
