@@ -105,3 +105,43 @@ or type `cell_view.<TAB>` in jupyter/ipython
 ```lisp
 (plus 3 4)
 ```
+
+### Advanced server configuration
+
+##### Sharing the server socket (Unix)
+
+By default the Unix-domain socket is created at `/tmp/skill-server-<id>.sock` and is
+only accessible by the user that started the server. To let another user or group
+connect to the same server, pass extra options to `pyStartServer`:
+
+```lisp
+; share the socket with a group (by numeric gid)
+pyStartServer ?allowGid 1234
+
+; share the socket with another user (by name, via an ACL)
+pyStartServer ?allowExtraUser "alice"
+```
+
+`allowGid` changes the socket's group ownership and sets its mode to `0o660`;
+`allowExtraUser` grants that user read/write access via `setfacl` (the host needs the
+`acl` tooling installed). Both options are Unix-only and are ignored on Windows.
+
+##### Environment variables
+
+| Variable | Effect |
+|---|---|
+| `SKILLBRIDGE_SOCK_FILE` | Override the Unix socket path (default `/tmp/skill-server-<id>.sock`). Set it for **both** the server (Virtuoso) side and the Python client so they agree on the same path. |
+| `SKILLBRIDGE_LOG_DIRECTORY` | Directory for the server log files (default: the current working directory). |
+
+### Agent skills
+
+The [`opencode-skills/`](opencode-skills/) directory ships repo-managed OpenCode skills
+for driving Cadence/skillbridge from an AI coding agent — a SKILL programmer backed by a
+prebuilt documentation index, a shell runner for tools such as `si`, a Spectre netlist
+exporter, and media/netlist viewer helpers. See
+[`opencode-skills/README.md`](opencode-skills/README.md) for details.
+
+> **Note:** the SKILL documentation index under
+> `opencode-skills/cadence-skill-programmer/references/index/` is generated and not
+> checked in (it is git-ignored). Regenerate it locally with
+> `opencode-skills/cadence-skill-programmer/scripts/build_index.py` before first use.
